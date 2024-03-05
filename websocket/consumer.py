@@ -2,6 +2,7 @@ from channels.generic.websocket import AsyncWebsocketConsumer
 from channels.generic.websocket import WebsocketConsumer
 from asgiref.sync import async_to_sync
 import json
+
 """By default the send(), group_send(), group_add() and other functions are async functions, meaning you have to await them. 
 If you need to call them from synchronous code, you ll need to use the handy asgiref.sync.async_to_sync wrapper:
 """
@@ -21,10 +22,11 @@ class MySocketConsumer(WebsocketConsumer):
         # To accept the connection call:
         self.accept()
 
-        #send method used to send data frombackend to frontend
+        #send method used to send data from backend to frontend
         self.send(text_data=json.dumps({"STATUS":"WebSocket comsumer connect"}))
         
-    #recieve method will receive data from frontend to backend
+    #recieve method will receive data from frontend to backend 
+    #javascript method 
     def receive(self, text_data=None, bytes_data=None):
         print(text_data)
 
@@ -34,7 +36,7 @@ class MySocketConsumer(WebsocketConsumer):
     def send_notification(self,data):
         print(data)
         notification_data=json.loads(data.get('value'))
-        self.send(text_data=json.dumps(notification_data))
+        self.send(text_data=json.dumps(notification_data)) #javascript method socket.onmessage will receive this data from backend
 
 
 #disadvantages of websocketconsumer is it will not wait for data it will  give all data at a time.

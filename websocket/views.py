@@ -13,7 +13,7 @@ def index(request):
 
 def task(request):
     total=request.GET.get('total')
-    LoopData(int(total)).start()
+    LoopData(int(total)).start() #here we have called thread
     return HttpResponse("Done")
 
 def index1(request):
@@ -22,6 +22,7 @@ def index1(request):
     for i in range(1,11):
         
         data={'count':i}
+        #here type is send_notification which in method called which is avilable in consumer
         async_to_sync(channel_layer.group_send)(
             "test_broudcast_group",{
                'type':'send_notification',
